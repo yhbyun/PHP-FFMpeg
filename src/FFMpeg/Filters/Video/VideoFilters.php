@@ -132,4 +132,18 @@ class VideoFilters extends AudioFilters
 
         return $this;
     }
+
+    /**
+    * Changes the video pixelformat
+    *
+    * @param Integer $pixel_format
+    *
+    * @return VideoFilters
+    */
+    public function pixelformat($pixel_format)
+    {
+        $this->media->addFilter(new PixelFormatFilter($pixel_format));
+
+        return $this;
+    }
 }
