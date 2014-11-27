@@ -18,6 +18,7 @@ use FFMpeg\Format\VideoInterface;
 
 class RotateFilter implements VideoFilterInterface
 {
+    const ROTATE_0 = 'void';
     const ROTATE_90 = 'transpose=1';
     const ROTATE_180 = 'hflip,vflip';
     const ROTATE_270 = 'transpose=2';
@@ -64,12 +65,18 @@ class RotateFilter implements VideoFilterInterface
             }
         }
 
-        return array('-vf', $this->angle, '-metadata:s:v:0', 'rotate=0');
+        if ($this->angle !== self::ROTATE_0) {
+            return array('-vf', $this->angle, '-metadata:s:v:0', 'rotate=0');
+        }
+
+        // remove metadata only and no transpose
+        return array('-metadata:s:v:0', 'rotate=0');
     }
 
     private function setAngle($angle)
     {
         switch ($angle) {
+            case self::ROTATE_0:
             case self::ROTATE_90:
             case self::ROTATE_180:
             case self::ROTATE_270:
