@@ -146,4 +146,15 @@ class VideoFilters extends AudioFilters
 
         return $this;
     }
+
+    /**
+     * @param $command
+     * @return $this
+     */
+    public function custom($command)
+    {
+        $this->media->addFilter(new CustomFilter($command));
+
+        return $this;
+    }
 }
